@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: delivery-authz
+  namespace: default
+spec:  
+  selector:
+    matchLabels:
+      app: deliveryservice
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+    when:
+    - key: request.auth.claims[iss]
+      values: ["mytrustedissuer@example.issuer.com"]

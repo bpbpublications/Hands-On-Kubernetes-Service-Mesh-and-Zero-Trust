@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pythoncronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: pythonjob
+            image: pythonjob
+            imagePullPolicy: IfNotPresent
+            args:
+            - ./main.py
+            command:
+            - python3
+          restartPolicy: OnFailure

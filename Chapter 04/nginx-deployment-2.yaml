@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+      annotations:
+        kubernetes.io/change-cause: "Use new nginx image"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.23.3
+        ports:
+        - containerPort: 80

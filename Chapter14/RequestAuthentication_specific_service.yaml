@@ -1,0 +1,23 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: request-authn-orders
+  namespace: orders
+spec:
+  selector:
+    matchLabels:
+      app: orderservice
+  jwtRules:
+  - issuer: "auth-issuer"
+    jwksUri: https://xyz.com/.well-known/jwks.json
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-jwt-default
+  namespace: orders
+spec:
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]

@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: orders-authz
+ namespace: orders
+spec:
+  action: ALLOW
+  rules:
+    - from:
+      - source:
+          principals: ["cluster.local/ns/default/sa/default"]

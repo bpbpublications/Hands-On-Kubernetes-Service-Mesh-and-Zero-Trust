@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: redisds-gpu
+  labels:
+    app: redisds-gpu
+    gpu: "true"
+spec:
+  selector:
+    matchLabels:
+      app: redisds-gpu
+      gpu: “true”
+    template:
+      metadata:
+        labels:
+          app: redisds-gpu
+          gpu: “true”
+        spec:
+          nodeSelector:
+            gpu: “true”
+          containers:
+          - name: redis
+            image: redis:7.0

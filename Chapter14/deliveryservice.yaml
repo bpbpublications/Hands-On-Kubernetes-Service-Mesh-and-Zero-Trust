@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deliverysvc-deployment
+  labels:
+    app: deliveryservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deliveryservice
+  template:
+    metadata:
+      labels:
+        app: deliveryservice
+    spec:
+      containers:
+      - name: deliveryservice
+        image: deliveryservice:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deliveryservice
+  labels:
+    app: deliveryservice
+spec:
+  ports:
+  - port: 8080
+    name: http
+    targetPort: 8080
+  selector:
+    app: deliveryservice

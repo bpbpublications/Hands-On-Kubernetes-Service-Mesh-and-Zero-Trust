@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: mongodb-access-policy
+  namespace: default
+spec:
+ selector:
+   matchLabels:
+     app: mongodb
+ action: ALLOW
+ rules:
+ - from:
+   - source:
+       principals: ["cluster.local/ns/default/sa/pet-service"]
+   to:
+   - operation:
+       ports: ["27017"]

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-mongo
+spec:
+  volumes:
+  - name: mongo-volume
+    persistentVolumeClaim:
+      claimName: mongodb-persistent-storage-claim
+  containers:
+  - image: mongo:6.0.1
+    name: mongod-container
+    volumeMounts:
+    - mountPath: /data/db
+      name: mongo-volume

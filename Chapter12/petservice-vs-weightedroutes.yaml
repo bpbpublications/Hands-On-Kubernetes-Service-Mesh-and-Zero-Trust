@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: petservice
+spec:
+  hosts:
+    - petservice.default.cluster.svc.local
+  gateways:
+    - petservice-gateway
+  http:
+  - route:
+    - destination:
+        host: petservice
+        subset: v1
+        port:
+          number: 5000
+      weight: 50
+    - destination:
+        host: petservice
+        subset: v2
+        port:
+          number: 5000
+      weight: 50

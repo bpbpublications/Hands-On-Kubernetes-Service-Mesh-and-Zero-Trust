@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petsvc-deployment
+  labels:
+    app: petservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petservice
+  template:
+    metadata:
+      labels:
+        app: petservice
+    spec:
+      containers:
+      - name: petservice
+        image: petservice:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petservice
+  labels:
+    app: petservice
+spec:
+  ports:
+  - port: 8080
+    name: http
+    targetPort: 8080
+  selector:
+    app: petservice

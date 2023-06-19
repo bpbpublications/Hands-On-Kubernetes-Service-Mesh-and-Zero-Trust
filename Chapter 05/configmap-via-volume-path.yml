@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-configmap-via-volume-basic
+spec:
+  containers:
+    - name: test-container
+      image: gcr.io/google_containers/busybox
+      command: [ "/bin/sh", "-c", "cat /etc/config/database-config.host" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+   volumes:
+    - name: config-volume
+      configMap:
+        name: database-config    
+  restartPolicy: Never

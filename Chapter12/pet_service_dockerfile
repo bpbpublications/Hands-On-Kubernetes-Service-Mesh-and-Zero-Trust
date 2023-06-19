@@ -1,0 +1,14 @@
+# The Dockerfile defines the image's environment
+# Import Python runtime and set up working directory
+FROM python:3.10-slim
+WORKDIR /app
+ADD pet_service.py /app
+
+# Install any necessary dependencies
+RUN pip install flask
+
+# Open port 5000 for serving the webpage
+EXPOSE 5000
+
+# Run pet_service.py when the container launches
+CMD ["python", "pet_service.py"]

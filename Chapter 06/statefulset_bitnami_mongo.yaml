@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bitnami-replicaset-mongodb
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb
+  serviceName: bitnami-replicaset-mongodb-headless
+  template:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - command:
+        - /scripts/setup.sh
+        image: docker.io/bitnami/mongodb:6.0.1-debian-11-r11
+        imagePullPolicy: IfNotPresent
+        
+        name: mongodb
+        ports:
+        - containerPort: 27017
+          name: mongodb
+          protocol: TCP
+        
+        volumeMounts:
+        - mountPath: /bitnami/mongodb
+          name: datadir
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      name: datadir
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 30Gi
+      storageClassName: managed-premium
+      volumeMode: Filesystem
+

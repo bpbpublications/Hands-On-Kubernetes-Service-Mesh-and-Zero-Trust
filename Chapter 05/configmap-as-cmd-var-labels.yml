@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-configmap-as-cmd-variable
+  labels:
+    environment: handon-exercises
+    app: sample-app
+spec:
+  containers:
+    - name: test-container
+      image: gcr.io/google_containers/busybox
+      command: [ "/bin/sh", "-c", "echo $(db_host) $(db_port)" ]
+      env:
+        - name: db_host
+          valueFrom:
+            configMapKeyRef:
+              name: database-config
+              key: host
+        - name: db_port
+          valueFrom:
+            configMapKeyRef:
+              name: database-config
+              key: port
+  restartPolicy: Never

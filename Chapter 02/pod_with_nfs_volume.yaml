@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-redis
+spec:
+  volumes:
+  - name: test-nfs-volume
+    nfs:
+      server: test-nfs-server.example.com
+      path: /test-nfs-volume
+  containers:
+  - image: redis
+    name: redis-container
+    volumeMounts:
+    - mountPath: /test-nfs-data
+      name: test-nfs-volume

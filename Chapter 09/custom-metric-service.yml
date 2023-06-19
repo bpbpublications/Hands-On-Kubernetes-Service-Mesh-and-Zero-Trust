@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: custom-metric-python-svc
+spec:
+  selector:
+    app: custom-metric-python-prometheus
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      name: app

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tracing-demo-app
+  name: tracing-demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracing-demo-app
+  template:
+    metadata:
+      labels:
+        app: racing-demo-app
+    spec:
+      containers:
+      - image: quay.io/rbaumgar/otelcol-demo-app-jvm
+        imagePullPolicy: IfNotPresent
+        name: otelcol-demo-app
+        env:
+        - name: OTELCOL_SERVER
+          value: "http://otel-collector-daemonset-collector.default.svc.cluster.local:4317"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tracing-demo-app
+  name: tracing-demo-app
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: web
+  selector:
+    app: tracing-demo-app
+  type: LoadBalancer

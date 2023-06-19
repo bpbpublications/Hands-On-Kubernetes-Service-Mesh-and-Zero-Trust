@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+     name: my-redis
+spec:
+  securityContext:
+    runAsUser: 100
+    runAsGroup: 300
+    fsGroup: 200
+  containers:
+  - image: redis
+    name: redis-container
+    securityContext:
+      allowPrivilegedEscalation: false

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-metric-python-prometheus
+  labels:
+    app: custom-metric-python-prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: custom-metric-python-prometheus
+  template:
+    metadata:
+      labels:
+        app: custom-metric-python-prometheus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "5000"
+    spec:
+      containers:
+        - name: python-with-prometheus
+          imagePullPolicy: Always
+          # Point this at your Docker Repo
+          image: swapnildubey1984/custom-metric-app:1.0.1
+          ports:
+            - containerPort: 5000
+          # Necessary to see stderr output
+          env:
+          - name: PYTHONUNBUFFERED
+            value: "1"

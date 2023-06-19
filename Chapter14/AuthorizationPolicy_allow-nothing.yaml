@@ -1,0 +1,6 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: orders-authz-allow-nothing
+spec:
+  action: ALLOW

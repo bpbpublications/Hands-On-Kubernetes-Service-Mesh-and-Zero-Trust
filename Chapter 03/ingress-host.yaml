@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myapp-host-ingress
+spec:
+  rules:
+  - host: tiger.handon-k8s.com
+    http:
+      paths:
+      - backend:
+          serviceName: my-app-service
+          servicePort: 6000

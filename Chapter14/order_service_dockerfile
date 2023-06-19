@@ -1,0 +1,16 @@
+# The Dockerfile defines the image's environment
+# Import Python runtime and set up working directory
+FROM python:3.10-slim
+WORKDIR /app
+ADD order_service.py /app
+
+# Install any necessary dependencies
+RUN pip install flask
+RUN pip install requests
+RUN pip install opentelemetry-instrumentation-flask
+
+# Open port 8080 for serving the webpage
+EXPOSE 8080
+
+# Run order_service.py when the container launches
+CMD ["python", "order_service.py"]

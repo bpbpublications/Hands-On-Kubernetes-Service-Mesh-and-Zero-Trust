@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tier-config
+  namespace: default
+data:
+  tier: frontend

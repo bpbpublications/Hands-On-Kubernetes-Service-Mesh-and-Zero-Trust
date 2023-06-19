@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: pets-authz
+ namespace: default
+spec:
+  action: DENY
+  rules:
+    - from:
+      - source:
+          notNamespaces: ["default"]

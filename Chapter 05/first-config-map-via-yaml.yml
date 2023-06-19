@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  config.txt: |
+    db.host=10.51.248.17
+    db.port=3306
+  environment: frontend
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2023-01-30T23:24:09Z"
+  name: first-config-map-via-yaml
+  namespace: sample-namespace
+  resourceVersion: "9083226"
+  uid: b909a64d-8de5-4642-9d07-633a2daa863d
